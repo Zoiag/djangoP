@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Info</title>
+    {% extends "base.html" %}
+</head>
+<body>
+{% block content %}
+    <!-- partial:index.partial.html -->
+    <div class="outer-figure">
+        <figure class="fir-image-figure">
+            <a>
+                <img class="fir-clickcircle" src="https://fir-rollup.firebaseapp.com/de-sm.jpg"
+                     alt="David East - Author">
+            </a>
+
+            <figcaption>
+                <div class="fig-author-figure-title">{{ teacher.first_name }} {{ teacher.surname }}</div>
+                <div class="fig-author-figure-title">Experience: {{ teacher.experience }} years.</div>
+                <div>
+                    <button class="btn btn-primary" onclick="location.href='{% url 'create_subject' teacher.id %}'">Add subject</button>
+                    <button class="btn btn-primary" onclick="location.href='{% url 'schools_info' teacher.id %}'">My Schools</button>
+                </div>
+            </figcaption>
+        </figure>
+    </div>
+
+    <!-- partial -->
+    <div class="outer">
+        <div class="container">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Mark</th>
+                    <th>Student</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for subject in subjects %}
+                    {% if subject.mark < 3 %}
+                        <tr class="danger">
+                            <th>{{ subject.name }}</th>
+                            <th>{{ subject.mark }}</th>
+                            <th>{{ subject.student.first_name }} {{ subject.student.surname }}</th>
+                            <th><a class="btn" href='{% url 'delete_subject' subject.id %}'>Delete</a></th>
+                        </tr>
+                    {% elif subject.mark == 3 %}
+                        <tr class="warning">
+                            <th>{{ subject.name }}</th>
+                            <th>{{ subject.mark }}</th>
+                            <th>{{ subject.student.first_name }} {{ subject.student.surname }}</th>
+                            <th><a class="btn" href='{% url 'delete_subject' subject.id %}'>Delete</a></th>
+                        </tr>
+                    {% elif subject.mark == 4 %}
+                        <tr class="info">
+                            <th>{{ subject.name }}</th>
+                            <th>{{ subject.mark }}</th>
+                            <th>{{ subject.student.first_name }} {{ subject.student.surname }}</th>
+                            <th><a class="btn" href='{% url 'delete_subject' subject.id %}'>Delete</a></th>
+                        </tr>
+                    {% elif subject.mark == 5 %}
+                        <tr class="success">
+                            <th>{{ subject.name }}</th>
+                            <th>{{ subject.mark }}</th>
+                            <th>{{ subject.student.first_name }} {{ subject.student.surname }}</th>
+                            <th><a class="btn" href='{% url 'delete_subject' subject.id %}'>Delete</a></th>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Info</title>
+    {% extends "base.html" %}
+</head>
+<body>
+{% block content %}
+    <!-- partial:index.partial.html -->
+    <div class="outer-figure">
+        <figure class="fir-image-figure">
+            <a>
+                <img class="fir-clickcircle" src="https://fir-rollup.firebaseapp.com/de-sm.jpg"
+                     alt="David East - Author">
+            </a>
+
+            <figcaption>
+                <div class="fig-author-figure-title">{{ teacher.first_name }} {{ teacher.surname }}</div>
+                <div class="fig-author-figure-title">Experience: {{ teacher.experience }} years.</div>
+                <div>
+                    <button class="btn btn-primary"
+                            onclick="location.href='{% url 'info' %}'">
+                        Back
+                    </button>
+
+                    <button class="btn btn-primary"
+                            onclick="location.href='{% url 'create_school' teacher.id %}'">
+                        Add school
+                    </button>
+                </div>
+            </figcaption>
+        </figure>
+    </div>
+
+    <!-- partial -->
+    <div class="outer">
+        <div class="container">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Address</th>
+                    <th>Rating</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for school in schools %}
+                    <tr>
+                        <th>{{ school.type }}</th>
+                        <th>{{ school.address }}</th>
+                        <th>{{ school.rating }}</th>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
+</body>
+</html>

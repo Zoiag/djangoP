@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - codingnepalweb.com -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Login & Signup Form</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/signStyle.css' %}">
+</head>
+<body>
+<section class="wrapper">
+
+    <div class="form signup">
+        <header>Signup</header>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="username_reg" id="username" placeholder="Full name" required/>
+            <input type="text" name="email_reg" id="mail" placeholder="Email address" required/>
+            <input type="password" name="password_reg" placeholder="Password" required/>
+            <input type="submit" id="signup-btn" value="Signup"/>
+        </form>
+    </div>
+
+
+    <div class="form login">
+        <header>Login</header>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="email" placeholder="Email address" required/>
+            <input type="password" name="password" placeholder="Password" required/>
+            <input type="submit" value="Login"/>
+        </form>
+    </div>
+</section>
+
+{% block javascript %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#username').keyup(function () {
+                $.ajax(
+                    {
+                        data: $(this).serialize(),
+                        url: "{% url 'validate_name_mail' %}",
+                        success:
+                            function (response) {
+                                if ($('#usernameError').length == 0)
+                                    $('#username').after('<div class="invalid-feedback d-block" id="usernameError" style="font-size: 13px"></div>');
+                                if (response.taken_name == true) {
+                                    $('#usernameError').removeClass('valid-feedback').addClass('invalid-feedback').text("The username is not available");
+                                    $('#signup-btn').prop('disabled', true)
+                                } else {
+                                    $('#usernameError').removeClass('invalid-feedback').addClass('valid-feedback').text("The username is available");
+                                    $('#signup-btn').prop('disabled', false)
+                                }
+                            },
+                        error: function (response) {
+                            console.log(response.responseJSON.errors);
+                        }
+                    }
+                );
+                return false;
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#mail').keyup(function () {
+                $.ajax(
+                    {
+                        data: $(this).serialize(),
+                        url: "{% url 'validate_name_mail' %}",
+                        success:
+                            function (response) {
+                                if ($('#mailError').length == 0)
+                                    $('#mail').after('<div class="invalid-feedback d-block" id="mailError" style="font-size: 13px"></div>');
+                                if (response.taken_mail == true) {
+                                    $('#mailError').removeClass('valid-feedback').addClass('invalid-feedback').text("The email is not available");
+                                    $('#signup-btn').prop('disabled', true)
+                                } else {
+                                    $('#mailError').removeClass('invalid-feedback').addClass('valid-feedback').text("The email is available");
+                                    $('#signup-btn').prop('disabled', false)
+                                }
+                            },
+                        error: function (response) {
+                            console.log(response.responseJSON.errors);
+                        }
+                    }
+                );
+                return false;
+            });
+        });
+    </script>
+
+    <script>
+        const wrapper = document.querySelector(".wrapper"),
+            signupHeader = document.querySelector(".signup header"),
+            loginHeader = document.querySelector(".login header");
+        loginHeader.addEventListener("click", () => {
+            wrapper.classList.add("active");
+        });
+        signupHeader.addEventListener("click", () => {
+            wrapper.classList.remove("active");
+        });
+    </script>
+{% endblock javascript %}
+
+
+</body>
+</html>

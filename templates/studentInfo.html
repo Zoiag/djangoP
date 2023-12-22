@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Info</title>
+    {% extends "base.html" %}
+
+</head>
+<body>
+{% block content %}
+    <!-- partial:index.partial.html -->
+    <div class="outer-figure">
+        <figure class="fir-image-figure">
+
+            <a>
+                <img class="fir-author-image fir-clickcircle" src="https://fir-rollup.firebaseapp.com/de-sm.jpg"
+                     alt="David East - Author">
+            </a>
+
+            <figcaption>
+                <div class="fig-author-figure-title">{{ student.first_name }} {{ student.surname }}</div>
+                <div class="fig-author-figure-title">Phone: {{ student.phone_number }}</div>
+                <div>
+                    <button class="btn btn-primary" onclick="location.href='{% url 'edit_profile' student.id %}'">Edit Profile</button>
+                </div>
+            </figcaption>
+        </figure>
+    </div>
+
+    <!-- partial -->
+    <div class="outer">
+        <div class="container">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Mark</th>
+                    <th>Teacher</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for subject in subjects %}
+                    {% if subject.mark < 3 %}
+                        <tr class="danger">
+                            <th>{{ subject.name }}</th>
+                            <th>{{ subject.mark }}</th>
+                            <th>{{ subject.teacher.first_name }} {{ subject.teacher.surname }}</th>
+                        </tr>
+                    {% elif subject.mark == 3 %}
+                        <tr class="warning">
+                            <th>{{ subject.name }}</th>
+                            <th>{{ subject.mark }}</th>
+                            <th>{{ subject.teacher.first_name }} {{ subject.teacher.surname }}</th>
+                        </tr>
+                    {% elif subject.mark == 4 %}
+                        <tr class="info">
+                            <th>{{ subject.name }}</th>
+                            <th>{{ subject.mark }}</th>
+                            <th>{{ subject.teacher.first_name }} {{ subject.teacher.surname }}</th>
+                        </tr>
+                    {% elif subject.mark == 5 %}
+                        <tr class="success">
+                            <th>{{ subject.name }}</th>
+                            <th>{{ subject.mark }}</th>
+                            <th>{{ subject.teacher.first_name }} {{ subject.teacher.surname }}</th>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

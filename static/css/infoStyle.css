@@ -1,0 +1,41 @@
+body {
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.fir-clickcircle {
+  height: 80px;
+  width: 80px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.fir-image-figure {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-bottom: 0px;
+}
+
+.fir-image-figure .caption, .fir-image-figure figcaption {
+  padding-left: 15px;
+}
+
+.outer .container{
+  padding-top: 100px;
+  max-width: fit-content;
+}
+
+.outer-figure{
+  padding-top: 130px;
+  padding-left: 600px;
+}
+
+th{
+  min-width: 250px;
+}
+
+.btn{
+  height: 30px;
+}
+
